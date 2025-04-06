@@ -6,10 +6,11 @@ spring:
       routes:
       - id: DEPARTMENT-SERVICE
         uri: http://localhost:8080
+#        uri: lb://DEPARTMENT-SERVICE
         predicates:
           - Path=/api/departments/**
       - id: EMPLOYEE-SERVICE
-#        uri: lb://EMPLOYEE-SERVICE  -loadbalancer is not working
+#        uri: lb://EMPLOYEE-SERVICE
         uri: http://localhost:8081
         predicates:
           - Path=/api/employees/**
