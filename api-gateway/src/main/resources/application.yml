@@ -33,6 +33,10 @@ management:
         include:
           - "*"
 
+
+#  tracing:
+#    sampling:
+#      probability: 1
 #logging:
 #  level:
 #    org:
