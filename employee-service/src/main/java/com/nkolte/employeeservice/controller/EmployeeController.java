@@ -12,7 +12,7 @@ import java.net.URI;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/employee-service/")
+@RequestMapping("/api/employees/")
 public class EmployeeController {
     private EmployeeService employeeService;
 
