@@ -25,9 +25,27 @@ management:
   endpoints:
     web:
       exposure:
-        include=*:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+  health:
+    circuitbreakers:
+      enabled: true
   tracing:
     sampling:
       probability: 1.0
 
+resilience4j:
+  circuitbreaker:
+    instances:
+      EMPLOYEE-SERVICE:
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
+        waitDurationInOpenState: 5s
 

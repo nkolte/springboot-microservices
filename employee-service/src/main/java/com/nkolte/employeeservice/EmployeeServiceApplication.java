@@ -21,10 +21,10 @@ public class EmployeeServiceApplication {
 		return new ModelMapper();
 	}
 
-	@Bean
+	/*@Bean
 	public RestTemplate restTemplate(){
 		return new RestTemplate();
-	}
+	}*/
 
 	@Bean
 	public WebClient webClient(){
