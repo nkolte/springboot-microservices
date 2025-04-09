@@ -8,7 +8,9 @@ import com.nkolte.employeeservice.repository.EmployeeRepository;
 import com.nkolte.employeeservice.service.EmployeeService;
 import com.nkolte.employeeservice.service.client.APIClient;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeRepository employeeRepository;
@@ -34,9 +37,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         return savedEmployeeDto;
     }
 
-   @CircuitBreaker(name = "${spring.application.name}", fallbackMethod = "getDefaultDepartment")
+//   @CircuitBreaker(name = "${spring.application.name}", fallbackMethod = "getDefaultDepartment")
+    @Retry(name = "${spring.application.name}", fallbackMethod = "getDefaultDepartment")
     @Override
     public APIResponseDto findEmployeeById(Long id) {
+        log.info("Inside findEmployeeById method.");
+        log.info(" ");
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(()->new RuntimeException(String
                         .format("Employee with id:%s not found!",id)));
@@ -62,6 +68,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     public APIResponseDto getDefaultDepartment(Long id, Throwable t) {
+        log.info("Inside fallback method.");
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(()->new RuntimeException(String
                         .format("Employee with id:%s not found!",id)));
