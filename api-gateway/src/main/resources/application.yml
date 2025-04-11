@@ -9,11 +9,18 @@ spring:
 #        uri: lb://DEPARTMENT-SERVICE
         predicates:
           - Path=/api/departments/**
+
       - id: EMPLOYEE-SERVICE
 #        uri: lb://EMPLOYEE-SERVICE
         uri: http://localhost:8081
         predicates:
           - Path=/api/employees/**
+
+      - id: ORGANIZATION-SERVICE
+        uri:  http://localhost:8082
+#        uri: lb//ORGANIZATION-SERVICE
+        predicates:
+            - Path=/api/organizations/**
 
 server:
   port: 9191
