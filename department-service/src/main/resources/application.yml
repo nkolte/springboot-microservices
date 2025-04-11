@@ -23,7 +23,7 @@ management:
   endpoints:
     web:
       exposure:
-        include=*:
+        include: "*"
   tracing:
     sampling:
       probability: 1.0
